@@ -80,6 +80,20 @@ public class PessoaController {
 		}
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/excluir/{id}")
+	  public void deletePerson(@PathVariable("id") Long id, @RequestBody PessoaRq pessoaRq) throws Exception {
+	    var p = pessoaRepository.findById(id);
+	  
+	    if (p.isPresent()) {
+	      var pessoaSave = p.get();
+	      pessoaSave.setNome(pessoaRq.getNome());
+	      pessoaSave.setSobrenome(pessoaRq.getSobrenome());
+	      pessoaRepository.delete(pessoaSave);
+	    } else {
+	      throw new Exception("Pessoa Não encontrada");
+	    }
+	  }
+	
 	
 	
 	
